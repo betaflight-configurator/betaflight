@@ -1,176 +1,56 @@
-# Betaflight Configurator
-
 ![Betaflight](http://static.rcgroups.net/forums/attachments/6/1/0/3/7/6/a9088900-228-bf_logo.jpg)
 
-[![Latest version](https://img.shields.io/github/v/release/betaflight/betaflight-configurator)](https://github.com/betaflight/betaflight-configurator/releases) [![Build](https://img.shields.io/github/actions/workflow/status/betaflight/betaflight-configurator/nightly.yml?branch=master)](https://github.com/betaflight/betaflight-configurator/actions/workflows/nightly.yml) [![Crowdin](https://d322cqt584bo4o.cloudfront.net/betaflight-configurator/localized.svg)](https://crowdin.com/project/betaflight-configurator) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=betaflight_betaflight-configurator&metric=alert_status)](https://sonarcloud.io/dashboard?id=betaflight_betaflight-configurator) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Join us on Discord!](https://img.shields.io/discord/868013470023548938)](https://discord.gg/n4E6ak4u3c)
+[![Latest version](https://img.shields.io/github/v/release/betaflight/betaflight)](https://github.com/betaflight/betaflight/releases) [![Build](https://img.shields.io/github/actions/workflow/status/betaflight/betaflight/nightly.yml?branch=master)](https://github.com/betaflight/betaflight/actions/workflows/nightly.yml) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Join us on Discord!](https://img.shields.io/discord/868013470023548938)](https://discord.gg/n4E6ak4u3c)
 
-Betaflight Configurator is software designed for configuring and managing flight controllers used in racing and freestyle drones. It works with the Betaflight firmware, offering a wide range of features to enhance drone flight performance and adapt it to various tasks and pilot preferences.
+Betaflight is flight controller software (firmware) used to fly multi-rotor craft and fixed wing craft.
 
-This cross-platform application is available for Windows, macOS, and Linux. It serves as a bridge between the user and the flight controller, providing a user-friendly interface for configuration without the need for command-line tools or specialized hardware.
+This fork differs from Baseflight and Cleanflight in that it focuses on flight performance, leading-edge feature additions, and wide target support.
 
-Key Features of Betaflight Configurator:
-Flight Parameter Tuning:
-Users can adjust parameters such as PIDs (proportional, integral, and derivative coefficients), filters, flight modes, and sensor calibration. This helps achieve optimal drone performance and responsiveness.
+## Events
 
-Modular Settings:
-The software allows configuration of various components, such as receiver types (e.g., SBUS, Crossfire, DSMX), ESC protocols (e.g., BLHeli, DShot), and functional mapping for controller ports.
+| Date  | Event |
+| - | - |
+| 28-04-2024 | Firmware 4.5 Release |
 
-Real-Time Monitoring:
-Betaflight Configurator provides a graphical interface to monitor metrics like battery voltage, RC signal strength, gyroscope, and accelerometer status, enabling precise diagnostics during setup.
 
-Component Testing:
-Built-in tools for motor testing, gyroscope, and accelerometer adjustments ensure that hardware components are functioning properly before flight.
+## News
 
-Firmware Updates:
-The software allows users to download and flash the latest firmware versions directly to the flight controller, ensuring access to new features and bug fixes.
+### Requirements for the submission of new and updated targets
 
-Who It’s For:
-Betaflight Configurator is suitable for both beginners and experienced pilots. Beginners can use its intuitive interface to take their first steps in drone configuration, while advanced users can fine-tune every aspect of their drone’s performance.
+The following new requirements for pull requests adding new targets or modifying existing targets are put in place from now on:
 
-The program requires a basic understanding of flight controllers and electronics. However, a wealth of online tutorials and community resources makes it easier for new users to learn.
+1. Read the [hardware specification](https://betaflight.com/docs/development/manufacturer/manufacturer-design-guidelines)
 
-With its powerful tools and ease of use, Betaflight Configurator has become a staple in the FPV drone community, empowering users to achieve the best performance from their drones.
+2. No new F3 based targets will be accepted;
 
-Betaflight Configurator is a crossplatform configuration tool for the Betaflight flight control system.
+3. For any new target that is to be added, only a Unified Target config into https://github.com/betaflight/unified-targets/tree/master/configs/default needs to be submitted. See the [instructions](https://betaflight.com/docs/manufacturer/creating-an-unified-target) for how to create a Unified Target configuration. If there is no Unified Target for the MCU type of the new target (see instructions above), then a 'legacy' format target definition into `src/main/target/` has to be submitted as well;
 
-It runs as an application under different operating systems and allows you to configure the Betaflight software running on any supported Betaflight target. [Downloads are available in Releases.](https://github.com/betaflight/betaflight-configurator/releases)
+4. For changes to existing targets, the change needs to be applied to the Unified Target config in https://github.com/betaflight/unified-targets/tree/master/configs/default. If no Unified Target configuration for the target exists, a new Unified Target configuration will have to be created and submitted. If there is no Unified Target for the MCU type of the new target (see instructions above), then an update to the 'legacy' format target definition in `src/main/target/` has to be submitted alongside the update to the Unified Target configuration.
 
-Various types of aircraft are supported by the tool and by Betaflight, e.g. quadcopters, hexacopters, octocopters and fixed-wing aircraft.
 
-## Authors
+## Features
 
-Betaflight Configurator is a [fork](#credits) of the Cleanflight Configurator with support for Betaflight instead of Cleanflight.
+Betaflight has the following features:
 
-This configurator is the only configurator with support for Betaflight specific features. It will likely require that you run the latest firmware on the flight controller.
+* Multi-color RGB LED strip support (each LED can be a different color using variable length WS2811 Addressable RGB strips - use for Orientation Indicators, Low Battery Warning, Flight Mode Status, Initialization Troubleshooting, etc)
+* DShot (150, 300 and 600), Multishot, Oneshot (125 and 42) and Proshot1000 motor protocol support
+* Blackbox flight recorder logging (to onboard flash or external microSD card where equipped)
+* Support for targets that use the STM32 F4, G4, F7 and H7 processors
+* PWM, PPM, SPI, and Serial (SBus, SumH, SumD, Spektrum 1024/2048, XBus, etc) RX connection with failsafe detection
+* Multiple telemetry protocols (CRSF, FrSky, HoTT smart-port, MSP, etc)
+* RSSI via ADC - Uses ADC to read PWM RSSI signals, tested with FrSky D4R-II, X8R, X4R-SB, & XSR
+* OSD support & configuration without needing third-party OSD software/firmware/comm devices
+* OLED Displays - Display information on: Battery voltage/current/mAh, profile, rate profile, mode, version, sensors, etc
+* In-flight manual PID tuning and rate adjustment
+* PID and filter tuning using sliders
+* Rate profiles and in-flight selection of them
+* Configurable serial ports for Serial RX, Telemetry, ESC telemetry, MSP, GPS, OSD, Sonar, etc - Use most devices on any port, softserial included
+* VTX support for Unify Pro and IRC Tramp
+* and MUCH, MUCH more.
 
-If you are experiencing any problems please make sure you are running the [latest firmware version](https://github.com/betaflight/betaflight/releases/).
+## Installation & Documentation
 
-## Installation
-
-### Standalone
-
-We provide a standalone program for Windows, Linux, Mac and Android.
-
-Download the installer from [Releases.](https://github.com/betaflight/betaflight-configurator/releases)
-
-### Notes
-
-#### Windows users
-
-The minimum required version of windows is Windows 8.
-
-#### MacOS X users
-
-Changes to the security model used in the latest versions of MacOS X 10.14 (Mojave) and 10.15 (Catalina) mean that the operating system will show an error message ('"Betaflight Configurator.app" is damaged and can’t be opened. You should move it to the Trash.') when trying to install the application. To work around this, run the following command in a terminal after installing: `sudo xattr -rd com.apple.quarantine /Applications/Betaflight\ Configurator.app`.
-
-#### Linux users
-
-In most Linux distributions your user won't have access to serial interfaces by default. To add this access right type the following command in a terminal, log out your user and log in again:
-
-```
-sudo usermod -aG dialout ${USER}
-```
-
-Post-installation errors can be prevented by making sure the directory `/usr/share/desktop-directories` exists. To make sure it exists, run the following command before installing the package:
-
-```
-sudo mkdir /usr/share/desktop-directories/
-```
-
-The `libatomic` library must also be installed before installing Betaflight Configurator. (If the library is missing, the installation will succeed but Betaflight Configurator will not start.) Some Linux distributions (e.g. Fedora) will install it automatically. On Debian or Ubuntu you can install it as follows:
-
-```
-sudo apt install libatomic1
-```
-
-On Ubuntu 23.10 please follow these alternative steps for installation:
-
-```
-sudo echo "deb http://archive.ubuntu.com/ubuntu/ lunar universe" > /etc/apt/sources.list.d/lunar-repos-old.list
-sudo apt update
-sudo dpkg -i betaflight-configurator_10.10.0_amd64.deb
-sudo apt-get -f install
-```
-
-#### Graphics Issues
-
-If you experience graphics display problems or smudged/dithered fonts display issues in Betaflight Configurator, try invoking the `betaflight-configurator` executable file with the `--disable-gpu` command line switch. This will switch off hardware graphics acceleration. Likewise, setting your graphics card antialiasing option to OFF (e.g. FXAA parameter on NVidia graphics cards) might be a remedy as well.
-
-### Unstable Testing Versions
-
-The future of the Configurator is moving to a PWA (Progressive Web Application). In this way it will be easier to maintain specially to support different devices like phones, tablets. etc. Is a work in progress but you can have access to the latest snapshot in PWA way without installing anything (take into account that some things don't work and are in development).
-
-- Latest PWA master snapshot of the Configurator: https://master.dev.app.betaflight.com/
-
-**Be aware that this version is intended for testing / feedback only, and may be buggy or broken, and can cause flight controller settings to be corrupted. Caution is advised when using this version.**
-
-## Languages
-
-**Please do not submit pull requests for translation changes, but read and follow the instructions below!**
-
-Betaflight Configurator has been translated into several languages. The application will try to detect and use your system language if a translation into this language is available. You can help [translating the application into your language](https://github.com/betaflight/betaflight/tree/master/README.md#translators);
-
-If you prefer to have the application in English or any other language, you can select your desired language in the first screen of the application.
-
-## Build and Development
-
-### Technical details
-
-The next versions of the Configurator will be a modern tool that based on PWA (Progressive Web Application) and uses principally Node, Yarn, Vite and Vue for development and building. For Android we use Capacitor as wrapper over the PWA. To build and develop over it, follow the instructions below.
-
-### Prepare your environment
-
-1. Install [node.js](https://nodejs.org/) (refer to [.nvmrc](./.nvmrc) for minimum required version)
-2. Install yarn: `npm install yarn -g`
-
-### PWA version
-
-#### Run development version
-
-1. Change to project folder and run `yarn install`.
-2. Run `yarn dev`.
-
-The web app will be available at http://localhost:8000 with full HMR.
-
-#### Run production version
-
-1. Change to project folder and run `yarn install`.
-2. Run `yarn build`.
-3. Run `yarn preview` after build has finished.
-
-Alternatively you can run `yarn review` to build and preview in one step.
-
-The web app should behave directly as in production, available at http://localhost:8080.
-
-### Android version
-
-NOTE: The Android version is not fully functional yet. It is in development.
-
-#### Prerequisites
-
-You need to install [Android Studio](https://developer.android.com/studio) as Capacitor apps are configured and managed through it.
-
-#### Run development version
-
-1. Change to project folder and run `yarn install`.
-2. Run `yarn android:run`.
-
-The command will ask for the device to run the app. You need to have some Android virtual machine created or some Android phone [connected using ADB](https://developer.android.com/tools/adb).
-
-As alternative to the step 2, you can execute a `yarn android:open` to open de project into Android Studio and run or debug the app from there.
-
-#### Run development version with live reload
-
-1. Change to project folder and run `yarn install`.
-2. Run `yarn dev --host`. It will start the vite server and will show you the IP address where the server is listening.
-3. Run `yarn android:dev` 
-
-This will ask for the IP where the server is running (if there are more than one network interfaces). You need to have some Android virtual machine created or some Android phone [connected using ADB](https://developer.android.com/tools/adb).
-Any change make in the code will reload the app in the Android device.
-
-### Running tests
-
-`yarn test`
+See: https://betaflight.com/docs/wiki
 
 ## Support and Developers Channel
 
@@ -184,6 +64,72 @@ https://www.facebook.com/groups/betaflightgroup/
 
 Etiquette: Don't ask to ask and please wait around long enough for a reply - sometimes people are out flying, asleep or at work and can't answer immediately.
 
-ctn - primary author and maintainer of Baseflight Configurator from which Cleanflight Configurator project was forked.
+## Configuration Tool
 
-Hydra -  author and maintainer of Cleanflight Configurator from which this project was forked.
+To configure Betaflight you should use the Betaflight-configurator GUI tool (Windows/OSX/Linux) which can be found here:
+
+https://github.com/betaflight-configurator/betaflight/releases/latest
+
+## Contributing
+
+Contributions are welcome and encouraged. You can contribute in many ways:
+
+* implement a new feature in the firmware or in configurator (see [below](#Developers));
+* documentation updates and corrections;
+* How-To guides - received help? Help others!
+* bug reporting & fixes;
+* new feature ideas & suggestions;
+* provide a new translation for configurator, or help us maintain the existing ones (see [below](#Translators)).
+
+The best place to start is the Betaflight Discord (registration [here](https://discord.gg/n4E6ak4u3c)). Next place is the github issue tracker:
+
+https://github.com/betaflight/betaflight/issues
+https://github.com/betaflight/betaflight-configurator/issues
+
+Before creating new issues please check to see if there is an existing one, search first otherwise you waste people's time when they could be coding instead!
+
+If you want to contribute to our efforts financially, please consider making a donation to us through [PayPal](https://paypal.me/betaflight).
+
+If you want to contribute financially on an ongoing basis, you should consider becoming a patron for us on [Patreon](https://www.patreon.com/betaflight).
+
+## Developers
+
+Contribution of bugfixes and new features is encouraged. Please be aware that we have a thorough review process for pull requests, and be prepared to explain what you want to achieve with your pull request.
+Before starting to write code, please read our [development guidelines](https://betaflight.com/docs/development) and [coding style definition](https://betaflight.com/docs/development/CodingStyle).
+
+GitHub actions are used to run automatic builds
+
+## Translators
+
+We want to make Betaflight accessible for pilots who are not fluent in English, and for this reason we are currently maintaining translations into 21 languages for Betaflight Configurator: Català, Dansk, Deutsch, Español, Euskera, Français, Galego, Hrvatski, Bahasa Indonesia, Italiano, 日本語, 한국어, Latviešu, Português, Português Brasileiro, polski, Русский язык, Svenska, 简体中文, 繁體中文.
+We have got a team of volunteer translators who do this work, but additional translators are always welcome to share the workload, and we are keen to add additional languages. If you would like to help us with translations, you have got the following options:
+- if you help by suggesting some updates or improvements to translations in a language you are familiar with, head to [crowdin](https://crowdin.com/project/betaflight-configurator) and add your suggested translations there;
+- if you would like to start working on the translation for a new language, or take on responsibility for proof-reading the translation for a language you are very familiar with, please head to the Betaflight Discord chat (registration [here](https://discord.gg/n4E6ak4u3c)), and join the ['translation'](https://discord.com/channels/868013470023548938/1057773726915100702) channel - the people in there can help you to get a new language added, or set you up as a proof reader.
+
+## Hardware Issues
+
+Betaflight does not manufacture or distribute their own hardware. While we are collaborating with and supported by a number of manufacturers, we do not do any kind of hardware support.
+If you encounter any hardware issues with your flight controller or another component, please contact the manufacturer or supplier of your hardware, or check RCGroups https://rcgroups.com/forums/showthread.php?t=2464844 to see if others with the same problem have found a solution.
+
+## Betaflight Releases
+
+https://github.com/betaflight/betaflight/releases
+
+## Open Source / Contributors
+
+Betaflight is software that is **open source** and is available free of charge without warranty to all users.
+
+Betaflight is forked from Cleanflight, so thanks goes to all those who have contributed to Cleanflight and its origins.
+
+Origins for this fork (Thanks!):
+* **Alexinparis** (for MultiWii),
+* **timecop** (for Baseflight),
+* **Dominic Clifton** (for Cleanflight),
+* **borisbstyle** (for Betaflight), and
+* **Sambas** (for the original STM32F4 port).
+
+The Betaflight Configurator is forked from Cleanflight Configurator and its origins.
+
+Origins for Betaflight Configurator:
+* **Dominic Clifton** (for Cleanflight configurator), and
+* **ctn** (for the original Configurator).
